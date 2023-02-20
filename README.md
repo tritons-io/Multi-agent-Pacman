@@ -2,9 +2,13 @@
 
 This project is widely inspired by the [Berkeley Pacman AI project](http://ai.berkeley.edu/project_overview.html).
 
-The goal of this project is the same: provide a AI sandbox for developers to implement Pacman agents that can play the game.
+The goal of this project is the same: provide an AI sandbox for developers to implement agents that can play Pacman.
 
 The project is working with python3 and [pygame 2.1.3](https://github.com/pygame/pygame/releases/tag/2.1.3).
+
+This environment aims to be simple and extensible.
+- It is simple because there are not many dependencies and a straightforward way to implement your own agents.
+- It is extensible because you can easily add complex agents while you progress in learning AI, and integrate complex patterns like Deep Q-Learning or Reinforcement Learning.
 
 ## Installation
 
@@ -75,7 +79,6 @@ The layout file is a text file with the following format:
 | `c`        | Clyde, the ghost in this location will be orange and use the agent ClydeAgent               |
 | `0-9`      | Portal, an agent entering this portal will be teleported to the portal with the same number |
 
-
 ## Ghosts
 
 Like in the original Game, the Ghost have different behaviours (that's why they are now named in the layout file).
@@ -111,6 +114,24 @@ The actions are:
 
 You can get the available actions by calling `get_legal_actions(state: PacmanState) -> List[Tuple[int, int]` on a PacmanAgent instance.
 You can generate the next state for an action by calling `generate_successor(action: Tuple[int, int]) -> PacmanState` on a PacmanState instance.
+
+
+### Get information from the game
+Once loaded in the game, the food and cherries of the layout will be updated in real time, so you can get the following information:
+- `state.layout.food` is a list of the food positions, expressed as a tuple of integers (x, y).
+- So `len(state.layout.food)` is the number of food left on the map.
+- `state.layout.cherries` is a list of the cherries positions, expressed as a tuple of integers (x, y).
+- So `len(state.layout.cherries)` is the number of cherries left on the map.
+The layout is attached to the PacmanState instance, so a generated successor will have its own layout.
+
+The PacmanState also contains the following information:
+- `state.ghosts` is a dictionary containing the ghosts agents instances, with the ghost name as key. `'blinky', 'pinky', 'inky', 'clyde'`
+- The pacman agent instance can be accessed from the `state.pacman` attribute.
+- The ghosts and pacman positions can be accessed from their respective instance attributes `position`.
+  - `position` contains a `coordinates` attribute: the position of the agent, expressed as a tuple of integers (x, y).
+  - `position` also contains a `direction` attribute: the direction the agent is facing, expressed as a tuple of integers (x, y) Expressed the same way as actions. `(1, 0)` for right, `(-1, 0)` for left, `(0, 1)` for up, `(0, -1)` for down.
+- `state.score` is the current score of the game.
+- `state.turn` is the number of turns that have been played since the beginning of the game, in other words the number of actions that have been performed by each agent.
 
 ## Contributing
 
