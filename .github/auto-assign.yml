@@ -1,0 +1,15 @@
+addReviewers: true
+addAssignees: author
+
+reviewers:
+  - FJEANNOT
+
+numberOfReviewers: 1
+
+assignees:
+  - FJEANNOT
+
+numberOfAssignees: 0
+
+skipKeywords:
+  - wip
